@@ -1,0 +1,2 @@
+porta = 7000
+companheiros_iniciais = ["rust2:7001", "python1:5000", "go1:6000"]

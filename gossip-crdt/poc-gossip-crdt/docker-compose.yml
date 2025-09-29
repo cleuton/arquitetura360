@@ -1,0 +1,146 @@
+version: "3.9"
+
+services:
+  # ---------- PYTHON ----------
+  python1:
+    build: ./python
+    environment:
+      - PORTA=5000
+      - COMPANHEIROS=python2:5001,go1:6000,rust1:7000
+    volumes: [ "./logs:/logs" ]
+    ports: [ "5000:5000" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5000/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  python2:
+    build: ./python
+    environment:
+      - PORTA=5001
+      - COMPANHEIROS=python3:5002,go2:6001,rust2:7001
+    volumes: [ "./logs:/logs" ]
+    ports: [ "5001:5001" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5001/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  python3:
+    build: ./python
+    environment:
+      - PORTA=5002
+      - COMPANHEIROS=python1:5000,go3:6002,rust3:7002
+    volumes: [ "./logs:/logs" ]
+    ports: [ "5002:5002" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5002/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  # ---------- GO ----------
+  go1:
+    build: ./go
+    environment:
+      - PORTA=6000
+      - COMPANHEIROS=go2:6001,python1:5000,rust1:7000
+    volumes: [ "./logs:/logs" ]
+    ports: [ "6000:6000" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:6000/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    depends_on:
+      rust1:
+        condition: service_healthy
+      python1:
+        condition: service_healthy
+
+  go2:
+    build: ./go
+    environment:
+      - PORTA=6001
+      - COMPANHEIROS=go3:6002,python2:5001,rust2:7001
+    volumes: [ "./logs:/logs" ]
+    ports: [ "6001:6001" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:6001/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    depends_on:
+      rust2:
+        condition: service_healthy
+      python2:
+        condition: service_healthy
+
+  go3:
+    build: ./go
+    environment:
+      - PORTA=6002
+      - COMPANHEIROS=go1:6000,python3:5002,rust3:7002
+    volumes: [ "./logs:/logs" ]
+    ports: [ "6002:6002" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:6002/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    depends_on:
+      rust3:
+        condition: service_healthy
+      python3:
+        condition: service_healthy
+
+  # ---------- RUST ----------
+  rust1:
+    build: ./rust
+    environment:
+      - PORTA=7000
+      - COMPANHEIROS=rust2:7001,python1:5000,go1:6000
+    volumes: [ "./logs:/logs" ]
+    ports: [ "7000:7000" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:7000/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  rust2:
+    build: ./rust
+    environment:
+      - PORTA=7001
+      - COMPANHEIROS=rust3:7002,python2:5001,go2:6001
+    volumes: [ "./logs:/logs" ]
+    ports: [ "7001:7001" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:7001/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  rust3:
+    build: ./rust
+    environment:
+      - PORTA=7002
+      - COMPANHEIROS=rust1:7000,python3:5002,go3:6002
+    volumes: [ "./logs:/logs" ]
+    ports: [ "7002:7002" ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:7002/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 20

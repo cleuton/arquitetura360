@@ -1,0 +1,5 @@
+porta: 5001
+companheiros_iniciais:
+  - "python3:5002"
+  - "go2:6001"
+  - "rust2:7001"
