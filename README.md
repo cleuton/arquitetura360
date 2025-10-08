@@ -14,4 +14,6 @@
 
 Bem vindas e bem vindos ao meu repo sobre **Arquitetura de Software**. Aqui, você aprende que arquitetura de software não é ser "evangelista" de produto ou framework, e que engenharia não é **clean code**.
 
+- [**Reinforcement learning - Tutorial**](./reinforcement_learning/): Um tutorial de **RL** para você utilizar em seus projetos. 
+
 - [**Gossip dissemination com CRDT**](./gossip-crdt/): Um estudo de caso muito interessante sobre telemetria de dispositivos industriais.

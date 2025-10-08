@@ -5,6 +5,8 @@
 
 [**LINK DO VÍDEO DESTA DEMONSTRAÇÃO**](https://youtu.be/UARncRvtXsY)
 
+[**Cleuton Sampaio**](https://linkedin.com/in/cleutonsampaio).
+
 Imagine esta situação: Você tem uma grande quantidade de equipamentos industriais e precisa monitorá-los adequadamente. O uso de um nó central é impraticável. Como implementaria isso? Cada nó pode cuidar de vários equipamentos e cada um deles deve convergir para um estado combinatório. 
 
 ## Visão Geral
