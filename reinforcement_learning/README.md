@@ -1,7 +1,7 @@
 
-<img src="../arquitetura_software_360_graus.png" heigth=300>
+<img src="../arquitetura_software_360_graus.png" height=300>
 
-<img src="rl.png" heigth=300>
+<img src="rl.png" height=300>
 
 # Reinforcement Learning
 
